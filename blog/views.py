@@ -8,12 +8,14 @@ def blog_detail_view(request, id):
         return render(request, 'blog_detail.html', {'blog_id': blog_id})
 
 
-
-
 def blog_list_view(request):
     if request.method == 'GET':
-        querty_blog = models.Blog.objects.all().order_by('-id')
-        return render(request, 'blog_list.html', {'blog': querty_blog})
+        query_blog = models.Blog.objects.all().order_by('-id')
+        return render(request, 'blog_list.html', {'blog': query_blog})
+
+
+
+
 
 
 

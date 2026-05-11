@@ -1,0 +1,22 @@
+<h1>Мои покупки</h1>
+
+<a href="/create_donate/">Добавить донат</a>
+
+<ul>
+    {% for i in donate %}
+
+    <li>
+        <h2>Ваше имя:{{ i.name }}</h2>
+        <img src="{{ i.image.url }}" alt="" width="200" height="200">
+        <p>Вы купили блог: {{ i.choice_blog }}</p>
+        <p>Ваш номер карты: {{ i.number_card }}</p>
+        <p>Дата покупки: {{ i.created_at }}</p>
+        <p>Дата изменения данных: {{ i.updated_at }}</p>
+         
+        <button><a href="/donate_list/{{ i.id }}/delete/">Удалить</a></button>
+        <button><a href="/donate_list/{{ i.id }}/update/">Изменить</a></button>
+
+    </li>
+
+    {% endfor %}
+</ul>

@@ -1,0 +1,11 @@
+<h1>Список пользователей</h1>
+ 
+{% for i in us  %}
+
+<h2>Привет ты - {{ i.username }}</h2>
+<p>Тебя зовут - {{ i.first_name }}</p>
+<img src="{{ i.photo.url }}" alt="" width="200" height="200">
+<p>Твой пол - {{ i.gender }}</p> 
+<p>Твой номер телефона - {{ i.phone_number }}</p>
+<p>Твой email - {{ i.email }}</p>
+{%  endfor  %}
