@@ -1,41 +1,37 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from . import models, forms
-
-#register
-def register_view(request):
-    if request.method == "POST":
-        form = forms.CustomRegisterForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/login/')
-    else:
-        form = forms.CustomRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
-
-#login
-def auth_login_view(request):
-    if request.method == "POST":
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('/user_list/')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'users/login.html', {'form': form})
-    
-#logout
-def auth_logout_view(request):
-    logout(request)
-    return redirect('/login/')
+from django.views import generic
 
 
+class RegisterView(generic.CreateView):
+    template_name = 'users/register.html'
+    form_class = forms.CustomRegisterForm
+    success_url = '/login/'
 
-#user_list
-def user_list_view(request):
-    if request.method == "GET":
-        user_list = models.CustomUser.objects.all()
-    return render(request, 'users/user_list.html', {'us': user_list})
+
+class LoginView(generic.FormView):
+    template_name = 'users/login.html'
+    form_class = AuthenticationForm
+    success_url = '/user_list/'
+
+    def form_valid(self, form):
+        user = form.get_user()
+        login(self.request, user)
+        return super().form_valid(form)
+
+
+class LogoutView(generic.View):
+    def get(self, request):
+        logout(request)
+        return redirect('/login/')
+
+
+class UserListView(generic.ListView):
+    template_name = 'users/user_list.html'
+    context_object_name = 'users'
+    model = models.CustomUser
+
+    def get_queryset(self):
+        return self.model.objects.all()

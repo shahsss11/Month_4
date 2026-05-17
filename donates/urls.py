@@ -3,8 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path('donate_list/', views.donate_list_view, name='dt_list'),
-    path('donate_list/<int:id>/delete/', views.delete_donate_view, name='del_list'),
-    path('donate_list/<int:id>/update/', views.update_donate_view, name='edit_list'),
-    path('create_donate/', views.create_donate_view, name='cr_donate'),
+    path('donate_list/', views.DonateListView.as_view(), name='dt_list'),
+    path('donate_list/<int:id>/delete/', views.DeleteDonateView.as_view(), name='del_list'),
+    path('donate_list/<int:id>/update/', views.UpdateDonateView.as_view(), name='edit_list'),
+    path('create_donate/', views.CreateDonateView.as_view(), name='cr_donate'),
 ]

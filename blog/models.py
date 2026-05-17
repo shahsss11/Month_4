@@ -12,6 +12,7 @@ class Blog(models.Model):
     )
     quantity = models.PositiveIntegerField(verbose_name='укажите кол-во страниц', default=20, null=True)
     type_blog = models.CharField(max_length=100, choices=TYPE_BLOG, default='Программирование')
+    views = models.PositiveIntegerField(default=0, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
